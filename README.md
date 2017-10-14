@@ -50,7 +50,7 @@ this.go({
 **正常跳转**
 
 ```
-<view onTap="handleGo" data-url="/page/index/index" data-redirect="true"></view>
+<view onTap="handleGo" data-url="/page/index/index"></view>
 ```
 
 **重定向跳转**
