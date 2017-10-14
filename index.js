@@ -1,16 +1,10 @@
-/*
- * @Author: saohui 
- * @Date: 2017-10-14 09:39:36 
- * @Last Modified by:   saohui 
- * @Last Modified time: 2017-10-14 09:39:36 
- */
 import util from './lib/util'
 
 const app = getApp()
 const history = app.globalData.history
 
 function FactoryHistory ( pageObj ) {
-    let isBack = true
+    let isBack = true, isDirect = false
     const ret = {
         ...pageObj
         ,onLoad ( query ) {
@@ -63,8 +57,8 @@ function FactoryHistory ( pageObj ) {
             } else if ( typeof router == 'string') {
                 ret.url = router
             }
-
-            if ( getCurrentPages().length == 5 ) {
+            if ( getCurrentPages().length == 5 || isDirect ) {
+                isDirect = false
                 my.redirectTo( ret )
             } else {
                 my.navigateTo( ret )
@@ -74,10 +68,9 @@ function FactoryHistory ( pageObj ) {
          * 重定向的时候使用
          */
         ,goRedirectTo ( router ) {
-            if ( getCurrentPages().length == 5 ) {
-                history.pop()
-                this.go( router )
-            }
+            isDirect = true
+            history.pop()
+            this.go( router )
         }
 
         /**
