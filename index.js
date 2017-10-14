@@ -1,7 +1,10 @@
 import util from './lib/util'
 
 const app = getApp()
-const history = app.globalData.history
+const history = app.globalData.history || []
+if ( app.globalData ) {
+    app.globalData.history = history
+}
 
 function FactoryHistory ( pageObj ) {
     let isBack = true, isDirect = false

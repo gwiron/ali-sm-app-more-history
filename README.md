@@ -63,6 +63,6 @@ this.go({
 
 ### ps
 
-* **页面跳转需要使用封装的方法，不能在使用原生的 myy.redirectTo / my.navigateTo**
+* **页面跳转需要使用封装的方法，不能在使用原生的 my.redirectTo / my.navigateTo**
 * **go 和 goRedirect会优先选择系统的历史栈，如果系统的不够了，才会使用自定义栈**
 
