@@ -7,13 +7,12 @@ if ( app.globalData ) {
 }
 
 function FactoryHistory ( pageObj ) {
-    let isBack = true, isDirect = false
+    let isBack = true, isDirect = false, currentRouter = ''
     const ret = {
         ...pageObj
         ,onLoad ( query ) {
             if ( getCurrentPages().length == 5 ) {
-                const router = '/'+ this.route +'?'+ util.flat( query )
-                history.push( router )
+                currentRouter = '/'+ this.route +'?'+ util.flat( query )
             }
             pageObj.onLoad && pageObj.onLoad.bind( this )( query )
         }
@@ -33,7 +32,6 @@ function FactoryHistory ( pageObj ) {
                 return
             }
 
-            history.pop()
             const router = history.pop()
             
             if ( router ) {
@@ -60,6 +58,11 @@ function FactoryHistory ( pageObj ) {
             } else if ( typeof router == 'string') {
                 ret.url = router
             }
+
+            if ( getCurrentPages().length == 5 && !isDirect ) {
+                history.push( currentRouter )
+            }
+
             if ( getCurrentPages().length == 5 || isDirect ) {
                 isDirect = false
                 my.redirectTo( ret )
@@ -72,7 +75,6 @@ function FactoryHistory ( pageObj ) {
          */
         ,goRedirectTo ( router ) {
             isDirect = true
-            history.pop()
             this.go( router )
         }
 
